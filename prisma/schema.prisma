@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  description String?  @db.Text
+  skills      skills[]
+}
+
+model notifications {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  message    String   @db.Text
+  is_read    Boolean? @default(false)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "notifications_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model reviews {
+  id          Int      @id @default(autoincrement())
+  session_id  Int
+  reviewer_id Int
+  rating      Int?
+  comment     String?  @db.Text
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  sessions    sessions @relation(fields: [session_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "reviews_ibfk_1")
+  users       users    @relation(fields: [reviewer_id], references: [id], onUpdate: Restrict, map: "reviews_ibfk_2")
+
+  @@index([reviewer_id], map: "reviewer_id")
+  @@index([session_id], map: "session_id")
+}
+
+model sessions {
+  id                               Int              @id @default(autoincrement())
+  teacher_id                       Int
+  learner_id                       Int
+  skill_id                         Int
+  session_datetime                 DateTime         @db.DateTime(0)
+  location                         String?          @db.VarChar(255)
+  status                           sessions_status? @default(pending)
+  notes                            String?          @db.Text
+  reviews                          reviews[]
+  users_sessions_teacher_idTousers users            @relation("sessions_teacher_idTousers", fields: [teacher_id], references: [id], onUpdate: Restrict, map: "sessions_ibfk_1")
+  users_sessions_learner_idTousers users            @relation("sessions_learner_idTousers", fields: [learner_id], references: [id], onUpdate: Restrict, map: "sessions_ibfk_2")
+  skills                           skills           @relation(fields: [skill_id], references: [id], onUpdate: Restrict, map: "sessions_ibfk_3")
+
+  @@index([learner_id], map: "learner_id")
+  @@index([skill_id], map: "skill_id")
+  @@index([teacher_id], map: "teacher_id")
+}
+
+model skills {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(100)
+  category    String?       @db.VarChar(100)
+  description String?       @db.Text
+  category_id Int?
+  sessions    sessions[]
+  categories  categories?   @relation(fields: [category_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "skills_ibfk_1")
+  user_skills user_skills[]
+
+  @@index([category_id], map: "category_id")
+}
+
+model user_skills {
+  id       Int                @id @default(autoincrement())
+  user_id  Int
+  skill_id Int
+  role     user_skills_role
+  level    user_skills_level?
+  users    users              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_skills_ibfk_1")
+  skills   skills             @relation(fields: [skill_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_skills_ibfk_2")
+
+  @@index([skill_id], map: "skill_id")
+  @@index([user_id], map: "user_id")
+}
+
+model users {
+  id                                  Int             @id @default(autoincrement())
+  name                                String          @db.VarChar(100)
+  email                               String          @unique(map: "email") @db.VarChar(100)
+  password                            String          @db.VarChar(255)
+  bio                                 String?         @db.Text
+  profile_picture                     String?         @db.VarChar(255)
+  location                            String?         @db.VarChar(100)
+  created_at                          DateTime        @default(now()) @db.Timestamp(0)
+  updated_at                          DateTime        @default(now()) @db.Timestamp(0)
+  notifications                       notifications[]
+  reviews                             reviews[]
+  sessions_sessions_teacher_idTousers sessions[]      @relation("sessions_teacher_idTousers")
+  sessions_sessions_learner_idTousers sessions[]      @relation("sessions_learner_idTousers")
+  user_skills                         user_skills[]
+}
+
+enum user_skills_role {
+  teach
+  learn
+}
+
+enum user_skills_level {
+  beginner
+  intermediate
+  advanced
+}
+
+enum sessions_status {
+  pending
+  accepted
+  completed
+  cancelled
+}
