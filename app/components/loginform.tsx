@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { signIn } from "next-auth/react"; // Adjust if needed
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
@@ -9,22 +9,32 @@ const LoginForm = () => {
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
-    const result = await signIn('credentials', {
-      email: email,
-      password: password,
-       
+    await signIn("credentials", {
+      email,
+      password,
     });
   };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 mb-6" noValidate>
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6 bg-[#FFF7ED] text-[#1F2937] p-8 rounded-2xl shadow-[6px_6px_0_0_#000] border-2 border-[#F97316] font-nunito w-full max-w-md mx-auto"
+      noValidate
+    >
+      <h2 className="text-[1.875rem] font-poppins font-extrabold text-center mb-2 tracking-tight">
+        Welcome Back
+      </h2>
+      <p className="text-center text-[1rem] text-[#374151] mb-6">
+        Log in to continue skill swapping.
+      </p>
+
       <input
         id="email"
-        type="email"
         name="email"
+        type="email"
         placeholder="Email"
         required
-        className="w-full p-4 border-4 border-black bg-yellow-100 text-black placeholder-gray-600 font-semibold shadow-[4px_4px_0_0_#000]"
-        style={{ borderRadius: 0 }}
+        className="w-full p-4 border-2 border-[#F97316] bg-[#FFFBEB] text-[#1F2937] placeholder-[#6B7280] font-semibold shadow-[3px_3px_0_0_#000] rounded-2xl"
       />
       <input
         id="password"
@@ -32,16 +42,15 @@ const LoginForm = () => {
         type="password"
         placeholder="Password"
         required
-        className="w-full p-4 border-4 border-black bg-yellow-100 text-black placeholder-gray-600 font-semibold shadow-[4px_4px_0_0_#000]"
-        style={{ borderRadius: 0 }}
+        className="w-full p-4 border-2 border-[#F97316] bg-[#FFFBEB] text-[#1F2937] placeholder-[#6B7280] font-semibold shadow-[3px_3px_0_0_#000] rounded-2xl"
       />
       <button
         type="submit"
-        className="w-full bg-black text-yellow-200 py-4 uppercase font-extrabold hover:bg-gray-900 transition tracking-widest shadow-[4px_4px_0_0_#000]"
-        style={{ borderRadius: 0 }}
+        className="w-full bg-[#F97316] text-white py-4 font-extrabold text-[1rem] tracking-wider rounded-4xl shadow-[3px_3px_0_0_#000] hover:bg-[#ea6a10] transition"
       >
-        Log In
+        🔐 Log In
       </button>
+      
     </form>
   );
 };

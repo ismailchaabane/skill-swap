@@ -7,55 +7,60 @@ export default async function Header() {
 
   const navLinks = [
     { name: "Home", href: "/home" },
+    { name: "Find a Skill", href: "/categories" },
+    { name: "My Sessions", href: "#" },
     { name: "Offer a Skill", href: "#" },
-    { name: "Find a Skill", href: "#" },
-    { name: "How It Works", href: "#" },
-    { name: "About", href: "#" },
+    { name: "About", href: "/about" },
   ];
 
   const user = session?.user;
 
   return (
-    <header className="bg-yellow-50 border-b-4 border-black shadow-[6px_6px_0_0_#000] font-georama sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center text-lg">
+<header className="bg-[#FFF7ED] px-6 py-4 rounded-full  border-2 border-[#F97316] font-poppins fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] max-w-6xl ">
+  <div className="flex justify-between items-center gap-6">
+    <Link
+      href="/home"
+      className="text-[1.5rem] font-extrabold tracking-wider uppercase text-[#1F2937]"
+    >
+      Skill<span className="text-[#F97316]">Swap</span>
+    </Link>
+
+    <nav className="flex gap-6 items-center font-nunito text-[0.875rem]">
+      {navLinks.map((link) => (
         <Link
-          href="/home"
-          className="text-3xl font-extrabold tracking-wider uppercase text-black"
+          key={link.name}
+          href={link.href}
+          className="relative group text-[#1F2937] font-semibold transition duration-300"
         >
-          Skill<span className="text-blue-600">Swap</span>
+          {link.name}
+          <span
+            className="absolute left-1/2 -bottom-1 w-0 h-[2px] rounded origin-center group-hover:w-full group-hover:left-0 transition-all duration-300"
+            style={{
+              background: "linear-gradient(90deg, #F97316, #34D399, #F59E0B)",
+            }}
+          ></span>
         </Link>
+      ))}
 
-        <nav className="flex gap-10 items-center">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-black font-semibold tracking-wide hover:text-blue-700 border-b-2 border-transparent hover:border-blue-600 transition-all duration-150"
-            >
-              {link.name}
-            </Link>
-          ))}
+      {session && session.user ? (
+        <AvatarMenu
+          user={{
+            name: user?.name || "User",
+            image: user?.image || "/default-avatar.png",
+            email: user?.email || "<Email>",
+          }}
+        />
+      ) : (
+        <Link
+          href="/login"
+          className="ml-4 bg-[#1F2937] text-[#FFF7ED] px-4 py-1.5 font-bold tracking-wide rounded-lg shadow-[3px_3px_0_0_#000] hover:bg-[#111827] transition"
+        >
+          Login
+        </Link>
+      )}
+    </nav>
+  </div>
+</header>
 
-          {/* Only pass what the client component needs */}
-          {session && session?.user ? (
-            <AvatarMenu
-              user={{
-                name: user?.name || "User",
-                image: user?.image || "/default-avatar.png",
-                email: user?.email || "<Email>",
-              }}
-            />
-          ) : (
-            <Link
-            href="/login"
-            className="ml-4 bg-black text-yellow-200 px-5 py-2 font-bold tracking-wider shadow-[3px_3px_0_0_#000] hover:bg-gray-900 transition"
-          >
-            Login
-          </Link>
-            
-          )}
-        </nav>
-      </div>
-    </header>
   );
 }
