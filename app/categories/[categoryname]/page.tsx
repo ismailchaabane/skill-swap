@@ -1,17 +1,15 @@
-import { getCategoryWithTeachers } from '@/lib/getCategoryWithTeachers';
+import { getTeachersWithCategory } from '@/lib/getCategoryWithTeachers';
 import { TeacherCard } from '@/app/components/CategoriesComponents/TeacherCard';
 import { Breadcrumb } from '@/app/components/CategoriesComponents/Breadcrumb';
 import Image from 'next/image';
-import Link from 'next/link';
 
-interface PageProps {
-  params: {
-    categoryname: string;
-  };
-}
 
-export default async function CategoryTeachersPage({ params }: PageProps) {
-  const category = await getCategoryWithTeachers(params.categoryname);
+
+export default async function CategoryTeachersPage(props: { params: { categoryname: string } }) {
+  const { params } = props;
+  const awaitedParams = await params;
+  const { categoryname } = awaitedParams;
+  const category = await getTeachersWithCategory(categoryname);
 
   if (!category) {
     return (

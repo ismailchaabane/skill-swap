@@ -1,7 +1,8 @@
 import 'server-only';
 import { db } from './db';
+import { link } from 'fs';
 
-export const getCategoryWithTeachers = async (categoryName: string) => {
+export const getTeachersWithCategory = async (categoryName: string) => {
   try {
     const category = await db.categories.findFirst({
       where: { 
@@ -22,6 +23,7 @@ export const getCategoryWithTeachers = async (categoryName: string) => {
                     profile_picture: true,
                     bio: true,
                     location: true,
+                    link: true,
                     sessions_sessions_teacher_idTousers: {
                       include: {
                         reviews: true
@@ -62,7 +64,8 @@ export const getCategoryWithTeachers = async (categoryName: string) => {
             location: user.location,
             rating: parseFloat(avgRating.toFixed(1)),
             skills: [skill.name], // Initial skill
-            sessionCount: sessions.length
+            sessionCount: sessions.length,
+            link: user.link || null
           });
         } else {
           // Add skill to existing teacher
@@ -81,7 +84,7 @@ export const getCategoryWithTeachers = async (categoryName: string) => {
       image: category.image || null,
       description: category.description,
       longDescription: category.description || null,
-      teachers: Array.from(teacherMap.values())
+      teachers: Array.from(teacherMap.values()),
     };
   } catch (error) {
     console.error("Error fetching category with teachers:", error);

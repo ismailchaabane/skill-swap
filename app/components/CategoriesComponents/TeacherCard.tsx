@@ -11,6 +11,7 @@ interface Teacher {
   rating: number;
   skills: string[];
   sessionCount?: number;
+  link: string;
 }
 
 interface TeacherCardProps {
@@ -18,6 +19,8 @@ interface TeacherCardProps {
 }
 
 export const TeacherCard = ({ teacher }: TeacherCardProps) => {
+  console.log("TeacherCard rendered for:", teacher.name);
+
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       {/* Teacher Header */}
@@ -128,7 +131,8 @@ export const TeacherCard = ({ teacher }: TeacherCardProps) => {
           </div>
 
           <Link
-            href={`/teachers/${teacher.id}`}
+          key={teacher.link}
+            href={`/teachers/${teacher.link}`}
             className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-sm font-medium hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-lg"
           >
             View Profile
