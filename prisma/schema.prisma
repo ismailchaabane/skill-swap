@@ -10,9 +10,10 @@ datasource db {
 
 model categories {
   id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(100)
+  name        String   @unique(map: "name") @db.VarChar(100)
   description String?  @db.Text
   icon        String   @db.VarChar(255)
+  image       String?  @db.VarChar(255)
   skills      skills[]
 }
 
@@ -67,7 +68,7 @@ model skills {
   description String?       @db.Text
   category_id Int?
   sessions    sessions[]
-  categories  categories?   @relation(fields: [category_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "skills_ibfk_1")
+  categories  categories?   @relation(fields: [category_id], references: [id], onDelete: Cascade, map: "skills_ibfk_1")
   user_skills user_skills[]
 
   @@index([category_id], map: "category_id")
