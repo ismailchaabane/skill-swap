@@ -182,7 +182,54 @@ const ProfilePage = () => {
               </div>
             </div>
           </motion.div>
-          
+          {/* Availability card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+                          className="bg-white backdrop-blur-sm rounded-3xl border border-[#E5E7EB] p-8 shadow-lg flex-1 max-w-2xl"
+
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold font-poppins">My Availability</h2>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-4 py-2 bg-[#FFF7ED] border border-[#FFEDD5] rounded-lg font-nunito text-[#F97316] flex items-center gap-2"
+                >
+                  <FaCalendarAlt />
+                  <span>Set Schedule</span>
+                </motion.button>
+              </div>
+              
+              <div className="mb-6">
+                <div className="flex justify-between mb-2 font-nunito">
+                  <span>Monday - Friday</span>
+                  <span className="text-[#34D399] font-medium">Available</span>
+                </div>
+                <div className="h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
+                  <div className="h-full bg-[#34D399] w-3/4 rounded-full"></div>
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <div className="flex justify-between mb-2 font-nunito">
+                  <span>Weekends</span>
+                  <span className="text-[#F59E0B] font-medium">Limited</span>
+                </div>
+                <div className="h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
+                  <div className="h-full bg-[#F59E0B] w-1/4 rounded-full"></div>
+                </div>
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full py-3.5 bg-gradient-to-r from-[#34D399] to-[#10B981] rounded-lg font-medium font-nunito text-white"
+              >
+                Publish Availability
+              </motion.button>
+            </motion.div>
           {/* Action buttons */}
           <div className="flex flex-col gap-4">
             <motion.button
@@ -370,53 +417,7 @@ const ProfilePage = () => {
               </motion.div>
             )}
             
-            {/* Availability card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white rounded-3xl border border-[#E5E7EB] p-8 shadow-lg"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold font-poppins">My Availability</h2>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 bg-[#FFF7ED] border border-[#FFEDD5] rounded-lg font-nunito text-[#F97316] flex items-center gap-2"
-                >
-                  <FaCalendarAlt />
-                  <span>Set Schedule</span>
-                </motion.button>
-              </div>
-              
-              <div className="mb-6">
-                <div className="flex justify-between mb-2 font-nunito">
-                  <span>Monday - Friday</span>
-                  <span className="text-[#34D399] font-medium">Available</span>
-                </div>
-                <div className="h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#34D399] w-3/4 rounded-full"></div>
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <div className="flex justify-between mb-2 font-nunito">
-                  <span>Weekends</span>
-                  <span className="text-[#F59E0B] font-medium">Limited</span>
-                </div>
-                <div className="h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#F59E0B] w-1/4 rounded-full"></div>
-                </div>
-              </div>
-              
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full py-3.5 bg-gradient-to-r from-[#34D399] to-[#10B981] rounded-lg font-medium font-nunito text-white"
-              >
-                Publish Availability
-              </motion.button>
-            </motion.div>
+            
           </div>
         </div>
       </div>
