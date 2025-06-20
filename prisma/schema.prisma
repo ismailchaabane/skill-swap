@@ -50,6 +50,8 @@ model sessions {
   session_datetime                 DateTime         @db.DateTime(0)
   location                         String?          @db.VarChar(255)
   status                           sessions_status? @default(pending)
+  duration                         Int
+  price                            Int
   notes                            String?          @db.Text
   reviews                          reviews[]
   users_sessions_teacher_idTousers users            @relation("sessions_teacher_idTousers", fields: [teacher_id], references: [id], onUpdate: Restrict, map: "sessions_ibfk_1")
@@ -80,6 +82,7 @@ model user_skills {
   skill_id Int
   role     user_skills_role
   level    user_skills_level?
+  price    Int
   users    users              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_skills_ibfk_1")
   skills   skills             @relation(fields: [skill_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_skills_ibfk_2")
 

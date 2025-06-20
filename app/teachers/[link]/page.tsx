@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import ProfileView from "@/app/components/Teachers/ProfileView";
-import getUserSkills from "@/lib/getUserSkills";
+import { getUserSkills } from "@/lib/getUserSkills";
 import { getSessionsByTeacher } from "@/lib/getSessionsByTeacher";
 import { getUserReviewsByTeacherId } from "@/lib/getUserReviews";
 

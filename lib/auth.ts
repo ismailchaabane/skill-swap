@@ -14,7 +14,6 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
     strategy: "jwt", // Use JWT for session management
   },
 
-  
   providers: [
     CredentialsProvider({
     name: "Credentials",
@@ -55,7 +54,6 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      // redirect to homepage after sign in
       return `${baseUrl}/home`;
     },
   },
